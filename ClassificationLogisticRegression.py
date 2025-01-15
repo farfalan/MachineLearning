@@ -1,3 +1,4 @@
+import matplotlib 
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -24,5 +25,6 @@ y4 = np.linspace(0,1,len(X_test[y_test == False]))
 ax.scatter(y3,X_test[y_test == True],c='blue', marker='o')
 ax.scatter(y4,X_test[y_test == False],c='red', marker='x')
 ax.plot(x,y)
+
 plt.show()
 
