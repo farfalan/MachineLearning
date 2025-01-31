@@ -23,11 +23,13 @@ y = df.iloc[:, 12]
 
 # Define the parameter grid for polynomial degrees
 param_grid = {
-    'poly_features__degree': np.arange(1, 5)  # Test polynomial degrees from 1 to 9
+    'poly_features__degree': np.arange(1, 10)  # Test polynomial degrees from 1 to 9
 }
 
 # Plotting setup
 plt.figure(figsize=(14, 8))
+
+mse_values = []
 
 # Loop through each degree in the parameter grid
 for degree in param_grid['poly_features__degree']:
@@ -44,21 +46,34 @@ for degree in param_grid['poly_features__degree']:
     for i, coef in enumerate(coefficients[1:], start=1):
         polynomial_equation += f" + ({coef:.2f} * X^{i})"
     print(f"Polynomial equation for degree {degree}: {polynomial_equation}")
+    
     # Predict
     y_pred = lin_reg.predict(X_poly)
+    
+    # Calculate performance metrics
+    mse = mean_squared_error(y, y_pred)
+    r2 = r2_score(y, y_pred)
+    print(f"Degree {degree} - Mean Squared Error: {mse:.2f}, R² Score: {r2:.2f}")
+    
+    # Store MSE value
+    mse_values.append(mse)
     
     # Plot
     plt.scatter(X, y_pred, label=f'Degree {degree}')
 
 # Plot original data
 plt.scatter(X, y, color='black', label='Original data')
-
-
-
-
 plt.xlabel('X')
 plt.ylabel('y')
 plt.title('Polynomial Regression with Different Degrees')
 plt.legend()
+plt.show()
+
+# Plot MSE values
+plt.figure(figsize=(10, 6))
+plt.plot(param_grid['poly_features__degree'], mse_values, marker='o')
+plt.xlabel('Polynomial Degree')
+plt.ylabel('Mean Squared Error')
+plt.title('Mean Squared Error for Different Polynomial Degrees')
 plt.show()
 
