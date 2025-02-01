@@ -12,7 +12,7 @@ import statsmodels.api as sm
 from ISLP.models import (ModelSpec as MS,
                          summarize,
                          poly)
-
+#test push
 # Load the Boston dataset
 Boston = load_data('Boston')
 
